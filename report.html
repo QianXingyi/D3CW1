@@ -1,0 +1,395 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>COMP6214:&nbsp;Open&nbsp;Data&nbsp;Innovation&nbsp;Coursework&nbsp;1</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+	<script src="d3.v4.min.js"></script>
+	<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+</head>
+
+<body>
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+					aria-expanded="false" aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="index.html">Open Data Innovation</a>
+			</div>
+			<div id="navbar" class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="index.html">Home</a></li>
+					<li><a href="index.html#alertInfo">Map</a></li>
+					<li><a href="index.html#vreport">Instruction</a></li>
+					<li><a href="#home">Report</a></li>
+
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+							aria-expanded="false">Navigation<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="references.html">References</a></li>
+							<li role="separator" class="divider"></li>
+							<li class="dropdown-header">Chapter</li>
+							<li><a href="#first">1.Shift of the Data</a></li>
+							<li><a href="#second">2.Multiple Representation</a></li>
+							<li><a href="#third">3.Mixed Ranges</a></li>
+							<li><a href="#fourth">4.Spelling Errors</a></li>
+							<li><a href="#fifth">5.Redundant Data</a></li>
+							<li><a href="#sixth">6.Summation Records</a></li>
+							<li><a href="#seventh">7.Wrong Format</a></li>
+							<li><a href="#eighth">8. Missing Values</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<div id="home"></div>
+	<div class="jumbotron text-center">
+		<h2>COMP6214:&nbsp;Open&nbsp;Data&nbsp;Innovation</h2>
+		<p>Qian&nbsp;Xingyi&nbsp;ID:&nbsp;xq1m18&nbsp;30037131</p>
+		<h2>Data&nbsp;Cleaning&nbsp;Report</h2>
+	</div>
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-4">
+				<div class="list-group">
+					<a href="#first" class="list-group-item active">
+						1.Shift of the Data
+					</a>
+					<a href="#second" class="list-group-item">2.Multiple Representation</a>
+					<a href="#third" class="list-group-item">3.Mixed Ranges</a>
+					<a href="#fourth" class="list-group-item">4.Spelling Errors</a>
+					<a href="#fifth" class="list-group-item">5.Redundant Data</a>
+					<a href="#sixth" class="list-group-item">6.Summation Records</a>
+					<a href="#seventh" class="list-group-item">7.Wrong Format</a>
+					<a href="#eighth" class="list-group-item">8. Missing Values</a>
+				</div>
+			</div>
+		</div>
+		<div id="first" class="row">
+			<div style="height:10px;"></div>
+			<div class="page-header">
+				<h1>1.Shift of the Data</h1>
+			</div>
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title">Before cleaning the data, the developer used Excel to open the csv and
+						re-organized the dataset.</h3>
+				</div>
+				<div class="panel-body">
+					<p>(1) Data for AUS, Id from 381 to 411 shift from the country_long column.</p>
+
+					<p>(2) Data for CHL, between id 715 and id 716 shift from the country column, 14 rows have this
+						problem.
+					</p>
+
+					<p>(3) Data for ECU, id from 927 to 946 shift from the country column.</p>
+
+					<p>(4) Data of IND, between id 1771 and 1718 shift from the country column.</p>
+
+					<p>(5) Data of IND, between id 1726 and 1755 shift from the country_long column.</p>
+
+					<p>(6) Data of ISR, between id 1976 and 2099 shift from the country_long column.</p>
+
+					<p>(7) Data of GBR, from id 4292 to 4323 shift from the country_long column.</p>
+
+					<p>(8) Data of GBR, between id 4347 and id 4348 shift from the country column.</p>
+				</div>
+			</div>
+
+
+
+
+		</div>
+		<div id="second" class="row">
+			<div style="height:10px;"></div>
+			<div class="page-header">
+				<h1>2.Multiple Representation</h1>
+			</div>
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title">In this dataset, for the country column, the developer used the text facet
+						in
+						Open Refine to list all the
+						country code and then used text facet of the country_long column to check the countries’ full
+						names.
+						And then
+						found the representation problems:</h3>
+				</div>
+				<div class="panel-body">
+					<p>(1) N-KOR is used to represent North Korea. However, most of the data in the dataset used PRK to
+						represent North
+						Korea. So, used PRK to replace it.</p>
+
+					<p>(2) S-KOR is used to represent South Korea. However, most of the data in the dataset used KOR to
+						represent South
+						Korea. So, used KOR to represent them.</p>
+
+					<p>(3) CH is used to represent Chile. However, most of the data used CHL to represent Chile.</p>
+
+					<p>(4) NVNM and SVNM are used to represent North Vietnam and South Vietnam. However, these two
+						countries
+						are
+						becoming a whole of Vietnam, and used VNM to represent, and also used Vietnam to replace North
+						Vietnam
+						and South
+						Vietnam.</p>
+
+					<p>(5) USSR was representing The Soviet Union. Now it no longer exists, the developer used Russia’s
+						code
+						RUS to
+						represent it. And used Russia to replace USSR in the country_long column.</p>
+
+					<p>(6) AU is used to represent Austria. However, AUT is used by most of the data. So, used AUT to
+						replace
+						the AU.
+					</p>
+					<p>(7) AZ is used to represent Azerbaijan. However, AZE is used by most of the data. So, used AZE to
+						replace the
+						AZ.</p>
+
+					<p>(8) ZAF is are used to represent South Africa. However, SA is used by most of the data. So, used
+						SA
+						to
+						replace
+						the ZAF.</p>
+
+					<p>(9) NLD is used to represent New Zealand. However, NZL is used by most of the data. So, used NZL
+						to
+						replace it.</p>
+
+					<p>(10) UK is used to represent the United Kingdom, However, most of the data used GBR. So, used GBR
+						to
+						replace the
+						UK.</p>
+
+					<p>(11) kor need to be capitalized to mean South Korea
+					</p>
+					<p>(12) sA needs to be capitalized to mean South Africa.</p>
+
+					<p>(13) RHD (Rhodesia) is now named Zimbabwe, used ZWE (Zimbabwe) in the dataset to replace it.</p>
+				</div>
+			</div>
+
+
+
+		</div>
+		<div id="third" class="row">
+			<div style="height:10px;"></div>
+			<div class="page-header">
+				<h1>3.Mixed Ranges</h1>
+			</div>
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title">In some cases, the database may mix the country and country_long, here are
+						some
+						problems found:</h3>
+				</div>
+				<div class="panel-body">
+					<p>(1) 5 rows of data with the country column value of Spain, replaced it with the value of ESP
+						which is
+						the code
+						for Spain</p>
+					<p>(2) 1 row of data with the country column value of Chile, replaced it with the value of CHL which
+						is
+						the code
+						for Chile.</p>
+					<p>(3) 3 rows of data with the country_long column value of YEM, replaced it with the value of Yemen
+						which is the
+						country name YEM represent for.</p>
+					<p>(4) London is used as the country_long, use the United Kingdom to replace it.</p>
+					<p>(5) Netflix and Chile is used as the country_long, used Chile to replace it.</p>
+				</div>
+			</div>
+
+		</div>
+		<div id="fourth" class="row">
+			<div style="height:10px;"></div>
+			<div class="page-header">
+				<h1>4.Spelling Errors</h1>
+			</div>
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title">The spelling errors have mainly happened in the country_long column. In the
+						early cleaning, the developer has
+						got
+						the all 146 countries in the dataset. And then used the Text Facet to get all the countries by
+						the
+						country code
+						and then used the Text Fact of the country_long click all 146 countries to get the country_long
+						of
+						the
+						countries. If one country code has more than one country_long, there must be something wrong.
+						Most
+						of the time
+						it is the spelling errors. And developer also checked the text facet of all fuels, and sort them
+						by
+						name to help
+						find
+						similar words.</h3>
+				</div>
+				<div class="panel-body">
+					<p>(1) Changed New Zealan to New Zealand (With the country NZL)
+
+						<p>(2) Changed Bangladess to Bangladesh</p>
+
+						<p>(3) Changed United to Kingdon United Kingdom</p>
+
+						<p>(4) Changed United to Kindom United Kingdom</p>
+
+						<p>(5) Changed Vietnan to Vietnam</p>
+
+						<p>(6) Changed Uzbekistam to Uzbekistan</p>
+
+						<p>(7) Changed Urguay to Uruguay</p>
+
+						<p>(8) Changed Chill to Chile</p>
+
+						<p>(9) Changed New Zealan to Netherlands (With the country NLD)</p>
+				</div>
+			</div>
+
+
+
+		</div>
+		<div id="fifth" class="row">
+			<div style="height:10px;"></div>
+			<div class="page-header">
+				<h1>5.Redundant Data</h1>
+			</div>
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title">For the dataset, the developer found that the unique identifier for each
+						power
+						station is the gppd_idnr. So, the
+						the developer used Text Facet for the gppd_idnr column and find the rows share the same
+						gppd_idnr
+						and check the
+						rows. The errors are shown below:</h3>
+				</div>
+				<div class="panel-body">
+					<p>(1) WRI1000118 3287and 3292</p>
+					<p>(2) WRI1001886 3129 and 3130</p>
+					<p>(3) WRI1003309 2962 and 2963</p>
+					<p>(4) WRI1019834 2780 and2781</p>
+					<p>(5) WRI1023156 3221 and 3222</p>
+					<p>(6) WRI1026026 3290 and 3295</p>
+					<p>(7) WRI1026027 3289 and 3294</p>
+					<p>(8) WRI1061293 3291 and 3296</p>
+					<p>(9) WRI1061301 3288 and 3293</p>
+
+				</div>
+			</div>
+		</div>
+
+		<div id="sixth" class="row">
+			<div style="height:10px;"></div>
+			<div class="page-header">
+				<h1>6.Summation Records</h1>
+			</div>
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title">Summation records are deleted by the developer.</h3>
+				</div>
+				<div class="panel-body">
+					<p>While cleaning the dataset, the developer found that two countries with the name of ALL INDA and
+						ALL
+						IRAQ. And
+						found these are summation records. And delete them.</p>
+				</div>
+			</div>
+
+		</div>
+
+		<div id="seventh" class="row">
+			<div style="height:10px;"></div>
+			<div class="page-header">
+				<h1>7.Wrong Format</h1>
+			</div>
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title">The developer chooses to remove redundant elements from the data and
+						overwrite
+						the format of the data to complete the correction of wrong format.</h3>
+				</div>
+				<div class="panel-body">
+					<p>(1) While cleaning the data, the developer found that the estimated_generation_gwh column has
+						some
+						columns
+						contain
+						characters (gwh). The developer used the command value.replace(“(gwh)”,””) to delete the
+						characters.
+						And
+						used
+						Numeric facet to change the values to numbers.</p>
+					<p>(2) While cleaning the data of the commissioning_year column. Found some year with month, the
+						developer deleted the months, they are 1988.1, 1993.5,1955.6,1997.4,1998.3,1999.5,1999.1,2002.5.
+					</p>
+					<p>(3) And the columns of commissioning_year also have some values like 1477, 15123 and 1774. The
+						developer
+						thinks these means 7/7/2014 and 2/12/2015. And changed them into 2014 and 2015.</p>
+
+				</div>
+			</div>
+
+
+
+		</div>
+		<div id="eighth" class="row">
+			<div style="height:10px;"></div>
+			<div class="page-header">
+				<h1>8. Missing Values</h1>
+			</div>
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title">There are three types of data missing in this database, one is full line
+						whitespace,
+						another one is non-repairable data missing, and the last one is repairable data missing.</h3>
+				</div>
+				<div class="panel-body">
+					<p>(1) While cleaning data, there is often a n element named blank. And the developer found that:
+						the id of
+					</p>
+					<p>478，535，590，691，692，693，694，695，696，697，698，770，841，918，997，1065，1111，1180，1186，1266，1353，1434，1435，1436，1437，1438，1439，1440，1441，1442，1443，1444，1445，1450，1520，1604，1673，1730，1769，1832，1973，1998，2009，2058，2717，2900，3037，3173，3195，3269，3331，3356，3357，3358，3359
+					</p>
+					are blank lines with no data. The developer just deleted those rows.</p>
+					<p>(2) Some data with the value of #NAME, NaN and Nil are needed to be cleaned. Since the
+						capacity_mw,
+						latitude,
+						longitude, commissioning_year, estimated_generation_gwh and some other columns are numbers. The
+						developer
+						transformed them to numbers and used Numeric Facet to sort it, and chosen the Non-numeric, Blank
+						and
+						Error rows
+						replace them to empty.</p>
+					<p>(3) 6 rows of data missed the country_long. However, they have their country column, and it can
+						be
+						filled. ITA
+						as
+						Italy, JPN as Japan, KAZ as Kazakhstan, MAR as Morocco, NIC as Nicaragua and PNG as Papua New
+						Guinea.
+					</p>
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="buttom"></div>
+
+
+
+
+
+</body>
+
+</html>

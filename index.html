@@ -1,0 +1,224 @@
+<!-- The CSS styles of this file are  partly referenced from the W3Schools's Tutorial of Bootstrap-->
+<!-- https://www.w3schools.com/bootstrap/bootstrap_get_started.asp -->
+<!-- custom.geo.json is from http://edshare.soton.ac.uk/19800/ -->
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>COMP6214:&nbsp;Open&nbsp;Data&nbsp;Innovation&nbsp;Coursework&nbsp;1</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+	<script src="d3.v4.min.js"></script>
+	<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+	<style type="text/css">
+		body {
+			text-align: center;
+			margin: 0 auto;
+		}
+
+		#map svg {
+			background-color: white;
+			text-align: center;
+
+		}
+
+		path.active {
+			stroke-width: 5;
+		}
+
+		div.tooltip {
+			position: absolute;
+			text-align: center;
+			width: 100px;
+			padding: 3px;
+			font: 14px sans-serif;
+			background: lightsteelblue;
+			border: 0px;
+			border-radius: 8px;
+			pointer-events: none;
+			opacity: 0;
+		}
+
+		div.tooltip.active {
+			opacity: 0.9;
+		}
+
+		div.svgDiv {
+			margin-left: 5px;
+			margin-right: 5px;
+			margin-bottom: 15px;
+			min-width: 1000px;
+			min-height: 540px;
+			text-align: center;
+		}
+
+		.h4 {
+			height: 60px;
+		}
+
+		#page {
+			padding-left: 12px;
+			padding-right: 12px;
+			padding-top: 6px;
+			padding-bottom: 6px;
+		}
+		#instruction{
+			text-align: left;
+			font-size:120%;
+		}
+	</style>
+	<script type="text/javascript" src="visual.js"></script>
+</head>
+
+<body>
+	<div id="home"></div>
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+					aria-expanded="false" aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">Open Data Innovation</a>
+			</div>
+			<div id="navbar" class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="#home">Home</a></li>
+					<li><a href="#alertInfo">Map</a></li>
+					<li><a href="#vreport">Instruction</a></li>
+					<li><a href="report.html">Report</a></li>
+					<li><a href="references.html">References</a></li>
+				</ul>
+			</div>
+			<!--/.nav-collapse -->
+		</div>
+	</nav>
+	<div class="jumbotron text-center">
+		<h2>COMP6214:&nbsp;Open&nbsp;Data&nbsp;Innovation</h2>
+		<p>Qian&nbsp;Xingyi&nbsp;ID:&nbsp;xq1m18&nbsp;30037131</p>
+		<h2>Visualization</h2>
+	</div>
+	<div class="container">
+		<div class="row">
+			<div class="alert alert-success">
+				<p>Place the mouse over a bar in the bar chart or click on the country in the map to get the energy
+					structure of the country in the pie chart.</p>
+				<p> pie chart shows the summary information of energy structure by default.</p>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6">
+				<button type="button" class="btn btn btn-danger" onclick="toFirstPage()">&lt;&lt;First</button>
+				<button type="button" class="btn btn btn-primary" onclick="toPreviousPage()">&lt;Previous</button>
+				<span id="page" class="label label-info"></span>
+				<button type="button" class="btn btn btn-primary" onclick="toNextPage()">Next&gt;</button>
+				<button type="button" class="btn btn btn-danger" onclick="toLastPage()">Last&gt;&gt;</button>
+			</div>
+			<div class="col-md-6">
+				<button type="button" class="btn btn btn-success"
+					onclick="viewType(0)">View&nbsp;Plant&nbsp;Numbers</button>
+
+				<button type="button" class="btn btn btn-info" onclick="viewType(1)">Capacity/MV</button>
+				<button type="button" class="btn btn btn-warning" onclick="viewType(2)">Estimated/GWH</button>
+			</div>
+
+		</div>
+
+		<div class="row" style="height:60px;">
+			<div class="col-md-6">
+			</div>
+			<div class="col-md-6">
+			</div>
+		</div>
+
+		<div id="svgDiv" class="row">
+			<div class="col-md-6">
+				<h4 id="svgTitleBar">Power station statistics by country</h4>
+				<div id="barSvgDiv" style="min-height:460px;"></div>
+			</div>
+			<div class="col-md-6">
+				<h4 id="svgTitlePie">Fuel structure details</h4>
+				<div id="pieSvgDiv" style="min-height:460px;"></div>
+			</div>
+		</div>
+		<div class="row" id="alertInfo">
+			<div class="alert alert-success">
+				<p>The light blue dots show the location of all the power stations in the data, and the gradient from
+					brown to blue indicates the number of power stations in the country.</p>
+				<p>Click on the map to get the country's energy information. The second click will uncheck. </p>
+			</div>
+		</div>
+		<div class="row" name="mapNav" id="mapNav">
+			<div id="map"></div>
+			<div id="map_tooltip" class="tooltip"></div>
+		</div>
+		<div class="row" id="vreport" name="vreport">
+			<div style="height:10px;"></div>
+			<div class="page-header">
+				<h1>Visualization Instruction</h1>
+			</div>
+		</div>
+		<div class="row">
+			<div  id="instruction"class="well">
+				<p>The developers tried to present the data in the database more fully to the audience. The country,
+					country name, plant name, gppd id capacity, location, fuel, year, estimated generation together with
+					some other information are more complete. In this project, the developer has chosen the country,
+					country name, location, fuel, capacity and estimated generation columns to visualize.</p>
+
+				<p>The purpose of this visualization is to give people who need to understand the energy structure and
+					power stations of various countries a more intuitive understanding of the information they need.
+					These audiences can be energy experts, environmentalists, energy-hungry industries like chemicals,
+					metals and so on.</p>
+
+				<p>The developer used JavaScript to list all the countries and all the fuels, then calculate the plant
+					number, capacity total and estimated generation total for each country and the plant number,
+					capacity total and estimated generation total for each fuel. Since all three data are specific to
+					country and fuel, three buttons are created to switch between the three data types, making the page
+					cleaner.</p>
+
+				<p>With these three data for each country and each fuel. It is possible for the developer to show the
+					energy fuel mix and total energy in each country. Since the bar chart is more suitable to reflect
+					the numerical values. The developer used a bar chart to show the value of the figures such as plant
+					count, capacity total and estimated generation total for each country. With more than 100 countries
+					to display, the developers split the data into groups of 10. And added some buttons to select page
+					turning.</p>
+
+				<p>The structure of the energy is earlier to be shown in a pie chart, with the arc represent for the
+					percentage for each fuel. Because the pie chart can reflect the proportion of a certain part in the
+					total by the area of each part. The developer also added a legend for the pie chart to show the
+					detailed figure for each fuel and show the colour for each fuel. </p>
+
+				<p>And then the developer used a map to plot all the plants on the map by the location and with the
+					colour of the country to show the number of the plants. The intensity of countries' colours and dots
+					gives an intuitive sense of the intensity of their power stations.</p>
+
+				<p>In this project, the charts are not isolated, they can interact with each other. While the user puts
+					the mouse over a country’s bar in the bar chart, the pie chart will show the fuel structure of this
+					country. And while the user clicks on a country in the map, a prompt box will pop up to show the
+					energy information of this country, what is more, the pie chart will show the fuel structure of the
+					country.</p>
+
+				<p>After the visualization is complete, it is obvious to see, the bar charts give a good view of the
+					size of each country's energy data and how they compare with each other. The pie chart shows the
+					fuel structure very well. The specific gravity of fuel can be clearly seen through the arc ratio.
+					The colour of the map shows the number of power stations in different countries, and the number of
+					points is a good indicator of the intensity of power stations. In summary, visualization is
+					appropriate for data. Visualization also meets the needs of the audience.</p>
+			</div>
+		</div>
+
+	</div>
+
+
+
+	</div>
+
+</body>
+
+</html>
